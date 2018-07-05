@@ -16,7 +16,7 @@ public class BadmintonEmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Scheduled(cron = "0 0 12 * * wed")
+	@Scheduled(cron = "0 30 12 * * wed")
 	public void sendAcitvitySignupEmail() {
 		ActivitySignupEmail email = new ActivitySignupEmail();
 		try {
