@@ -43,7 +43,7 @@ public class BadmintonEmailService {
 		}
 	}
 
-	// @Scheduled(cron = "0 48 16 * * fri")
+	@Scheduled(cron = "0 30 16 * * fri")
 	public void sendAcitvityResultEmail() {
 		ActivityResultEmail email = new ActivityResultEmail(basePath);
 		try {
