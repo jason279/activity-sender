@@ -1,9 +1,9 @@
 package com.quest.badminton.activitysender.email;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,13 +14,16 @@ public abstract class BaseEmail {
 	protected String subject;
 	protected String content;
 
+	protected String basePath;
+
 	protected abstract String[] initTo() throws Exception;
 
 	protected abstract String getContentFileName();
 
 	protected abstract int getDayOffset();
 
-	public BaseEmail() {
+	public BaseEmail(String basePath) {
+		this.basePath = basePath;
 		SimpleDateFormat sdf = new SimpleDateFormat("周五羽毛球活动正常进行(MM月dd日)");
 		this.subject = sdf.format(new Date(System.currentTimeMillis() + getDayOffset() * 24 * 60 * 60 * 1000));
 		try {
@@ -28,6 +31,7 @@ public abstract class BaseEmail {
 			initContent();
 		} catch (Exception e) {
 			this.to = new String[] { "Jason.Tian@quest.com" };
+			this.cc = null;
 			this.content = "Exception thrown by badminton email sender:" + e.getMessage();
 		}
 	}
@@ -35,7 +39,8 @@ public abstract class BaseEmail {
 	protected void initContent() throws IOException {
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(new File("src/main/resources", getContentFileName())));
+			reader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(this.basePath + getContentFileName()), "UTF-8"));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {

@@ -1,6 +1,9 @@
 package com.quest.badminton.activitysender.email;
 
 public class ActivityResultEmail extends BaseEmail {
+	public ActivityResultEmail(String basePath) {
+		super(basePath);
+	}
 
 	@Override
 	protected String getContentFileName() {
@@ -14,7 +17,7 @@ public class ActivityResultEmail extends BaseEmail {
 
 	@Override
 	protected int getDayOffset() {
-		return 2;
+		return 0;
 	}
 
 }
