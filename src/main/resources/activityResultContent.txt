@@ -1,0 +1,12 @@
+<html>
+<body>
+<h2>Hi All,</h2>
+<div style="font-size:16px;font-family:Helvetica,Arial,sans-serif">
+请准时参加今晚的羽毛球活动.<br /><br />
+活动时间：周五18:00 – 20:00 <br /><br />
+活动地点：体育中心羽毛球馆<br/><br />
+场地： 到前台报Mark Zhu手机号18023097773 <br /><br />
+</div>
+Best Regards
+</body>
+</html>

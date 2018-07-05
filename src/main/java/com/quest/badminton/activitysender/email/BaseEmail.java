@@ -1,25 +1,30 @@
-package com.quest.badminton.activitysender;
+package com.quest.badminton.activitysender.email;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class TemplateEmail {
-	private String from = "Jason.Tian@quest.com";
-	private String[] to;
-	private String cc = "Mark.Zhu@quest.com";
-	private String subject;
-	private String content;
+public abstract class BaseEmail {
+	protected String from = "Jason.Tian@quest.com";
+	protected String[] to;
+	protected String cc = "Mark.Zhu@quest.com";
+	protected String subject;
+	protected String content;
 
-	public TemplateEmail() {
+	protected abstract String[] initTo() throws Exception;
+
+	protected abstract String getContentFileName();
+
+	protected abstract int getDayOffset();
+
+	public BaseEmail() {
 		SimpleDateFormat sdf = new SimpleDateFormat("周五羽毛球活动正常进行(MM月dd日)");
-		this.subject = sdf.format(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000));
+		this.subject = sdf.format(new Date(System.currentTimeMillis() + getDayOffset() * 24 * 60 * 60 * 1000));
 		try {
-			initTo();
+			this.to = initTo();
 			initContent();
 		} catch (Exception e) {
 			this.to = new String[] { "Jason.Tian@quest.com" };
@@ -27,27 +32,10 @@ public class TemplateEmail {
 		}
 	}
 
-	private void initTo() throws IOException {
-		List<String> to = new ArrayList<>();
+	protected void initContent() throws IOException {
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader("src/main/resources/to.txt"));
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				to.add(line);
-			}
-			this.to = to.toArray(new String[] {});
-		} finally {
-			if (reader != null) {
-				reader.close();
-			}
-		}
-	}
-
-	private void initContent() throws IOException {
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader("src/main/resources/content.txt"));
+			reader = new BufferedReader(new FileReader(new File("src/main/resources", getContentFileName())));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {

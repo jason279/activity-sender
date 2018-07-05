@@ -8,24 +8,40 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.quest.badminton.activitysender.TemplateEmail;
+import com.quest.badminton.activitysender.email.ActivityResultEmail;
+import com.quest.badminton.activitysender.email.ActivitySignupEmail;
 
 @Service
 public class BadmintonEmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Autowired
-	private TemplateEmail email;
-
-	@Scheduled(cron = "0 0 9 * * wed")
-	public void send() {
+	@Scheduled(cron = "0 0 12 * * wed")
+	public void sendAcitvitySignupEmail() {
+		ActivitySignupEmail email = new ActivitySignupEmail();
 		try {
 			MimeMessage msg = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
 			helper.setFrom(email.getFrom());
 			helper.setTo(email.getTo());
 			helper.setCc(email.getCc());
+			helper.setSubject(email.getSubject());
+			msg.setContent(email.getContent(), "text/html;charset=utf-8");
+			this.mailSender.send(msg);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+//	@Scheduled(cron = "0 48 16 * * fri")
+	public void sendAcitvityResultEmail() {
+		ActivityResultEmail email = new ActivityResultEmail();
+		try {
+			MimeMessage msg = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
+			helper.setFrom(email.getFrom());
+			helper.setTo(email.getTo());
+			// helper.setCc(email.getCc());
 			helper.setSubject(email.getSubject());
 			msg.setContent(email.getContent(), "text/html;charset=utf-8");
 			this.mailSender.send(msg);
