@@ -10,7 +10,7 @@ import java.util.Date;
 public abstract class BaseEmail {
 	protected String from = "Jason.Tian@quest.com";
 	protected String[] to;
-	protected String cc = "Mark.Zhu@quest.com";
+	protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
 	protected String subject;
 	protected String content;
 
@@ -70,11 +70,11 @@ public abstract class BaseEmail {
 		this.to = to;
 	}
 
-	public String getCc() {
+	public String[] getCc() {
 		return cc;
 	}
 
-	public void setCc(String cc) {
+	public void setCc(String[] cc) {
 		this.cc = cc;
 	}
 

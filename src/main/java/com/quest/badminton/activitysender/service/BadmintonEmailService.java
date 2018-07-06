@@ -30,7 +30,7 @@ public class BadmintonEmailService {
 			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
 			helper.setFrom(email.getFrom());
 			helper.setTo(email.getTo());
-			String cc = email.getCc();
+			String[] cc = email.getCc();
 			if (cc != null) {
 				helper.setCc(email.getCc());
 			}
@@ -43,7 +43,7 @@ public class BadmintonEmailService {
 		}
 	}
 
-	@Scheduled(cron = "0 30 16 * * fri")
+	@Scheduled(cron = "0 40 10 * * fri")
 	public void sendAcitvityResultEmail() {
 		ActivityResultEmail email = new ActivityResultEmail(basePath);
 		try {
@@ -51,7 +51,7 @@ public class BadmintonEmailService {
 			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
 			helper.setFrom(email.getFrom());
 			helper.setTo(email.getTo());
-			String cc = email.getCc();
+			String[] cc = email.getCc();
 			if (cc != null) {
 				helper.setCc(email.getCc());
 			}
