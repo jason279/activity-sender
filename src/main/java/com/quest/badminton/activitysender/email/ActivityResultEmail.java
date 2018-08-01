@@ -1,9 +1,5 @@
 package com.quest.badminton.activitysender.email;
 
-import java.util.Set;
-
-import com.quest.badminton.activitysender.util.ActivityUtil;
-
 public class ActivityResultEmail extends BaseEmail {
 	public ActivityResultEmail(String basePath) {
 		super(basePath);
@@ -16,8 +12,8 @@ public class ActivityResultEmail extends BaseEmail {
 
 	@Override
 	protected String[] initTo() throws Exception {
-		Set<String> emails = ActivityUtil.getSignupResultEmails();
-		return emails.toArray(new String[emails.size()]);
+		// empty by default
+		return new String[0];
 	}
 
 	@Override
