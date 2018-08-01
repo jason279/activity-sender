@@ -98,7 +98,6 @@ Eric.Yuan@quest.com
 Johnny.Liu@quest.com
 Kyle.Xiong@quest.com
 Lee.Li@quest.com
-Keith.Chen@quest.com
 Grant.Zhu@quest.com
 Vincent.Hu@quest.com
 Cherry.Chen@quest.com
@@ -115,3 +114,4 @@ Connie.Zhou@quest.com
 Nancy.You@quest.com
 Wesley.Wei@quest.com
 Jason.Tian@quest.com
+Johnny.Jiang@quest.com
