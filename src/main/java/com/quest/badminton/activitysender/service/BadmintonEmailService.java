@@ -33,6 +33,7 @@ public class BadmintonEmailService {
 		// create activity link
 		String cookie = webSiteService.loginAsAdmin();
 		webSiteService.addActivity(cookie, LocalDate.now().plusDays(2));
+		logger.info("successfully add new activity."); 
 
 		// send email
 		ActivitySignupEmail email = new ActivitySignupEmail(basePath);
