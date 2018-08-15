@@ -5,7 +5,6 @@ Amo.Zhang@quest.com
 Anbeel.Li@quest.com
 Candy.Deng@quest.com
 Chanderler.Qian@quest.com
-Cherry.Chen@quest.com
 Cindy.Sang@quest.com
 Darren.Yue@quest.com
 Darrenn.Jiang@quest.com
@@ -100,7 +99,6 @@ Kyle.Xiong@quest.com
 Lee.Li@quest.com
 Grant.Zhu@quest.com
 Vincent.Hu@quest.com
-Cherry.Chen@quest.com
 Tony.Cheng.Zhuhai@quest.com
 Tim.Wu@quest.com
 Matthew.Tan@quest.com
