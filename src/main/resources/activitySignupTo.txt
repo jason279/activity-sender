@@ -51,7 +51,6 @@ Tony.Tang@quest.com
 Kyle.Wang@quest.com
 Vincent.Liu@quest.com
 Welson.Yang@quest.com
-Wenduan.Mou@quest.com
 William.Zheng@quest.com
 Yinghua.Qin@quest.com
 Zhiming.Lin@quest.com
