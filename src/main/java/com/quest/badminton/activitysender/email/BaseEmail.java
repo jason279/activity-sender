@@ -1,31 +1,32 @@
 package com.quest.badminton.activitysender.email;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import com.quest.badminton.activitysender.util.ActivityUtils;
 
 public abstract class BaseEmail {
 	protected String from = "Jason.Tian@quest.com";
 	protected String[] to;
-	protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
+	// protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
+	protected String[] cc = new String[] { "Jason.Tian@quest.com" };
 	protected String subject;
 	protected String content;
+	private String contentFileName;
 
 	protected String basePath;
 
-	protected abstract String[] initTo() throws Exception;
+	protected String[] initTo() throws Exception {
+		// empty by default
+		return new String[0];
+	}
 
-	protected abstract String getContentFileName();
-
-	protected abstract int getDayOffset();
-
-	public BaseEmail(String basePath) {
+	public BaseEmail(String basePath, String contentFileName) {
 		this.basePath = basePath;
-		SimpleDateFormat sdf = new SimpleDateFormat("周五羽毛球活动正常进行(MM月dd日)");
-		this.subject = sdf.format(new Date(System.currentTimeMillis() + getDayOffset() * 24 * 60 * 60 * 1000));
+		this.contentFileName = contentFileName;
+		this.subject = ActivityUtils.getActivityDateString("周五羽毛球活动正常进行(MM月dd日)");
 		try {
 			this.to = initTo();
 			initContent();
@@ -37,21 +38,14 @@ public abstract class BaseEmail {
 	}
 
 	protected void initContent() throws IOException {
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(this.basePath + getContentFileName()), "UTF-8"));
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line);
-			}
-			this.content = sb.toString();
-		} finally {
-			if (reader != null) {
-				reader.close();
-			}
+		BufferedReader reader = Files.newBufferedReader(Paths.get(this.basePath, this.contentFileName));
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
 		}
+		this.content = sb.toString();
+		reader.close();
 	}
 
 	public String getFrom() {

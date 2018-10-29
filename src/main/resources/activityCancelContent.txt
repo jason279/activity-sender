@@ -1,0 +1,9 @@
+<html>
+<body>
+<h2>Hi All,</h2>
+<div style="font-size:16px;font-family:Helvetica,Arial,sans-serif">
+由于报名人数太少，所以本周五晚的活动取消。<br /><br />
+</div>
+Best Regards
+</body>
+</html>

@@ -25,5 +25,4 @@ public class ActivitySenderApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(ActivitySenderApplication.class, args);
 	}
-
 }

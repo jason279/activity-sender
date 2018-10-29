@@ -20,11 +20,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.quest.badminton.activitysender.util.ActivityUtils;
 import com.quest.badminton.activitysender.util.ServerConstants;
 
 @Service
 public class ClubWebSiteService {
-
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -60,7 +60,9 @@ public class ClubWebSiteService {
 		return response.getBody();
 	}
 
-	public String getViewId(String content) {
+	public String getTopActivityViewId(String cookie) {
+		String content = visit(ServerConstants.CLUB_WEBSITE_BADMINTON_ACTIVITY_URL, HttpMethod.GET, cookie);
+
 		int startIndex = content.indexOf("/activities/view") + "/activities/view".length() + 1;
 		int lastIndex = content.indexOf("\">", startIndex);
 		String viewId = content.substring(startIndex, lastIndex);
@@ -70,9 +72,16 @@ public class ClubWebSiteService {
 		return viewId;
 	}
 
-	public String[] getSignupResultEmails(String content) {
-		if (content.indexOf("接受报名中") < 0) {
-			throw new RuntimeException("the state of activiy is not activate.");
+	public String getTopActivityViewId() {
+		return getTopActivityViewId(loginAsAdmin());
+	}
+
+	public String[] getSignupResultEmails(String cookie, String viewId) {
+		String content = visit(ServerConstants.CLUB_WEBSITE_BADMINTON_VIEW_URL, HttpMethod.GET, cookie, viewId);
+
+		String activityDateStr = ActivityUtils.getActivityDateString("MM/dd/yy");
+		if (content.indexOf(activityDateStr) < 0) {
+			throw new RuntimeException("Not the target activity " + activityDateStr);
 		}
 
 		// analyze email
@@ -86,35 +95,62 @@ public class ClubWebSiteService {
 		return emails.toArray(new String[emails.size()]);
 	}
 
-	public boolean addActivity(String cookie, LocalDate acitivityDate) {
+	public boolean addActivity() {
+		String cookie = loginAsAdmin();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Cookie", cookie);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		body.add("club_id", "1");
-
-		body.add("activity_date[year]", Integer.toString(acitivityDate.getYear()));
-		body.add("activity_date[month]", Integer.toString(acitivityDate.getMonthValue()));
-		body.add("activity_date[day]", Integer.toString(acitivityDate.getDayOfMonth()));
-		String title = "周五羽毛球活动(" + acitivityDate.getMonthValue() + "月" + acitivityDate.getDayOfMonth() + "日)";
-		body.add("tittle", title);
-		body.add("description", title);
-		body.add("max_amount", "24");
-		// body.add("min_amount", "1");
-		body.add("allow_sign", "1");
-		body.add("multiple_sign", "0");
-		body.add("status", "starting");
-		body.add("end_date[year]", Integer.toString(acitivityDate.getYear()));
-		body.add("end_date[month]", Integer.toString(acitivityDate.getMonthValue()));
-		body.add("end_date[day]", Integer.toString(acitivityDate.getDayOfMonth()));
-		body.add("end_date[hour]", "10");
-		body.add("end_date[minute]", "30");
+		MultiValueMap<String, String> body = getGeneralBody();
+		body.add("status", ActivityStatus.starting.name());
 
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(body, headers);
 
 		ResponseEntity<String> response = restTemplate
 				.postForEntity(ServerConstants.CLUB_WEBSITE_BADMINTON_ACTIVITY_ADD_URL, entity, String.class);
 		return response.getStatusCodeValue() == 302;
+	}
+
+	private MultiValueMap<String, String> getGeneralBody() {
+		LocalDate activityDate = ActivityUtils.getActivityDate();
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+		body.add("club_id", "1");
+
+		body.add("activity_date[year]", Integer.toString(activityDate.getYear()));
+		body.add("activity_date[month]", Integer.toString(activityDate.getMonthValue()));
+		body.add("activity_date[day]", Integer.toString(activityDate.getDayOfMonth()));
+		String title = "周五羽毛球活动(" + activityDate.getMonthValue() + "月" + activityDate.getDayOfMonth() + "日)";
+		body.add("tittle", title);
+		body.add("description", title);
+		body.add("max_amount", "24");
+		// body.add("min_amount", "1");
+		body.add("allow_sign", "1");
+		body.add("multiple_sign", "0");
+
+		body.add("end_date[year]", Integer.toString(activityDate.getYear()));
+		body.add("end_date[month]", Integer.toString(activityDate.getMonthValue()));
+		body.add("end_date[day]", Integer.toString(activityDate.getDayOfMonth()));
+		body.add("end_date[hour]", "10");
+		body.add("end_date[minute]", "30");
+		return body;
+	}
+
+	public boolean closeActivity(String cookie, String viewId) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Cookie", cookie);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		MultiValueMap<String, String> body = getGeneralBody();
+		body.add("status", ActivityStatus.end.name());
+
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(body, headers);
+
+		ResponseEntity<String> response = restTemplate
+				.postForEntity(ServerConstants.CLUB_WEBSITE_ACTIVITY_EDIT + viewId, entity, String.class);
+		return response.getStatusCodeValue() == 302;
+	}
+
+	public boolean closeActivity(String viewId) {
+		return closeActivity(loginAsAdmin(), viewId);
 	}
 }
