@@ -24,7 +24,7 @@ public class BadmintonEmailService {
 	@Autowired
 	private ClubWebSiteService webSiteService;
 
-	@Scheduled(cron = "0 15 17 * * fri")
+	@Scheduled(cron = "0 0 10 * * wed")
 	public void sendAcitvitySignupEmail() {
 		// create activity link
 		webSiteService.addActivity();
@@ -50,7 +50,7 @@ public class BadmintonEmailService {
 		}
 	}
 
-	@Scheduled(cron = "0 20 17 * * fri")
+	@Scheduled(cron = "0 0 16 * * thu")
 	public void sendAcitvityResultEmail() {
 		String cookie = webSiteService.loginAsAdmin();
 		String viewId = webSiteService.getTopActivityViewId(cookie);
