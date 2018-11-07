@@ -8,17 +8,17 @@ import org.springframework.shell.standard.ShellMethod;
 
 import com.quest.badminton.activitysender.service.ManageRecipientService;
 
-@ShellComponent
+@ShellComponent("email")
 public class ManageRecipientCommand {
 	@Autowired
 	private ManageRecipientService manageRecipientService;
 
-	@ShellMethod("add recipient")
+	@ShellMethod(key = "add", value = "add recipient")
 	public boolean add(String email) throws IOException {
 		return manageRecipientService.add(email);
 	}
 
-	@ShellMethod("delete recipient")
+	@ShellMethod(key = "del", value = "delete recipient")
 	public boolean delete(String email) {
 		return manageRecipientService.delete(email);
 	}

@@ -76,10 +76,10 @@ public class ClubWebSiteService {
 		return getTopActivityViewId(loginAsAdmin());
 	}
 
-	public String[] getSignupResultEmails(String cookie, String viewId) {
+	public String[] getSignupRecipients(String cookie, String viewId) {
 		String content = visit(ServerConstants.CLUB_WEBSITE_BADMINTON_VIEW_URL, HttpMethod.GET, cookie, viewId);
 
-		String activityDateStr = ActivityUtils.getActivityDateString("MM/dd/yy");
+		String activityDateStr = ActivityUtils.getActivityDateString("MM/d/yy");
 		if (content.indexOf(activityDateStr) < 0) {
 			throw new RuntimeException("Not the target activity " + activityDateStr);
 		}
@@ -129,9 +129,9 @@ public class ClubWebSiteService {
 
 		body.add("end_date[year]", Integer.toString(activityDate.getYear()));
 		body.add("end_date[month]", Integer.toString(activityDate.getMonthValue()));
-		body.add("end_date[day]", Integer.toString(activityDate.getDayOfMonth()));
-		body.add("end_date[hour]", "10");
-		body.add("end_date[minute]", "30");
+		body.add("end_date[day]", Integer.toString(activityDate.minusDays(1).getDayOfMonth()));
+		body.add("end_date[hour]", "16");
+		body.add("end_date[minute]", "00");
 		return body;
 	}
 

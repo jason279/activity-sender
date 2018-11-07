@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.quest.badminton.activitysender.email.ActivityResultEmail;
 import com.quest.badminton.activitysender.email.ActivitySignupEmail;
+import com.quest.badminton.activitysender.email.BaseEmail;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,44 +25,41 @@ public class BadmintonEmailService {
 	@Autowired
 	private ClubWebSiteService webSiteService;
 
-	@Scheduled(cron = "0 0 10 * * wed")
-	public void sendAcitvitySignupEmail() {
-		// create activity link
-		webSiteService.addActivity();
-		log.info("successfully add new activity.");
-
-		// send email
-		ActivitySignupEmail email = new ActivitySignupEmail(basePath);
-		try {
-			MimeMessage msg = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
-			helper.setFrom(email.getFrom());
-			helper.setTo(email.getTo());
-			String[] cc = email.getCc();
-			if (cc != null) {
-				helper.setCc(email.getCc());
-			}
-			helper.setSubject(email.getSubject());
-			msg.setContent(email.getContent(), "text/html;charset=utf-8");
-			this.mailSender.send(msg);
-			log.info("successfully send activity sign up email.");
-		} catch (Exception e) {
-			log.error("send activity sign up email failed.", e);
-		}
+	@Scheduled(cron = "0 30 9 * * wed")
+	public void sendAcitvitySignupEmailTask() {
+		createActivity();
+		sendEmail(new ActivitySignupEmail(basePath));
 	}
 
 	@Scheduled(cron = "0 0 16 * * thu")
-	public void sendAcitvityResultEmail() {
+	public void sendAcitvityResultEmailTask() {
 		String cookie = webSiteService.loginAsAdmin();
 		String viewId = webSiteService.getTopActivityViewId(cookie);
+
+		closeActivity(cookie, viewId);
+		sendEmail(createSignupResultEmail(cookie, viewId));
+	}
+
+	public void createActivity() {
+		webSiteService.addActivity();
+		log.info("successfully add new activity.");
+	}
+
+	public void closeActivity(String cookie, String viewId) {
 		webSiteService.closeActivity(cookie, viewId);
 		log.info("successfully close activity {}.", viewId);
+	}
 
-		String[] recipients = webSiteService.getSignupResultEmails(cookie, viewId);
+	public BaseEmail createSignupResultEmail(String cookie, String viewId) {
+		String[] recipients = webSiteService.getSignupRecipients(cookie, viewId);
 		boolean shouldCancel = (recipients.length < 4);
 		ActivityResultEmail email = new ActivityResultEmail(basePath,
 				shouldCancel ? "activityCancelContent.txt" : "activityResultContent.txt");
 		email.setTo(recipients);
+		return email;
+	}
+
+	public void sendEmail(BaseEmail email) {
 		try {
 			MimeMessage msg = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(msg, "UTF-8");
@@ -74,9 +72,10 @@ public class BadmintonEmailService {
 			helper.setSubject(email.getSubject());
 			msg.setContent(email.getContent(), "text/html;charset=utf-8");
 			this.mailSender.send(msg);
-			log.info("successfully send activity result email.");
+			log.info("successfully send email {}.", email);
 		} catch (Exception e) {
-			log.error("send activity result email failed.", e);
+			log.error("send email {} failed.", email, e);
 		}
 	}
+
 }

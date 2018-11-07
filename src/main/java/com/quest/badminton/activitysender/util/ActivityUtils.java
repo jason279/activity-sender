@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ActivityUtils {
 	public static LocalDate getActivityDate() {
-		return LocalDate.now().with(DayOfWeek.SATURDAY);
+		return LocalDate.now().with(DayOfWeek.FRIDAY);
 	}
 	
 	public static String getActivityDateString(String pattern) {
