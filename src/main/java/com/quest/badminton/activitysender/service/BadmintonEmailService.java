@@ -35,8 +35,8 @@ public class BadmintonEmailService {
 	public void sendAcitvityResultEmailTask() {
 		String cookie = webSiteService.loginAsAdmin();
 		String viewId = webSiteService.getTopActivityViewId(cookie);
-
-		closeActivity(cookie, viewId);
+		// don't close activity as there is always somebody who want to change it
+		// closeActivity(cookie, viewId);
 		sendEmail(createSignupResultEmail(cookie, viewId));
 	}
 
