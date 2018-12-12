@@ -25,6 +25,7 @@ import com.quest.badminton.activitysender.util.ServerConstants;
 
 @Service
 public class ClubWebSiteService {
+	private static final String MAX_AMOUNT = "12"; 
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -122,7 +123,7 @@ public class ClubWebSiteService {
 		String title = "周五羽毛球活动(" + activityDate.getMonthValue() + "月" + activityDate.getDayOfMonth() + "日)";
 		body.add("tittle", title);
 		body.add("description", title);
-		body.add("max_amount", "24");
+		body.add("max_amount", MAX_AMOUNT);
 		// body.add("min_amount", "1");
 		body.add("allow_sign", "1");
 		body.add("multiple_sign", "0");
