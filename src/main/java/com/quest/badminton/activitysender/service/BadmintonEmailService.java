@@ -31,7 +31,7 @@ public class BadmintonEmailService {
 		sendEmail(new ActivitySignupEmail(basePath));
 	}
 
-	@Scheduled(cron = "0 0 16 * * thu")
+	@Scheduled(cron = "0 0 11 * * fri")
 	public void sendAcitvityResultEmailTask() {
 		String cookie = webSiteService.loginAsAdmin();
 		String viewId = webSiteService.getTopActivityViewId(cookie);

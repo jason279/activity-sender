@@ -80,7 +80,7 @@ public class ClubWebSiteService {
 	public String[] getSignupRecipients(String cookie, String viewId) {
 		String content = visit(ServerConstants.CLUB_WEBSITE_BADMINTON_VIEW_URL, HttpMethod.GET, cookie, viewId);
 
-		String activityDateStr = ActivityUtils.getActivityDateString("MM/d/yy");
+		String activityDateStr = ActivityUtils.getActivityDateString("M/d/yy");
 		if (content.indexOf(activityDateStr) < 0) {
 			throw new RuntimeException("Not the target activity " + activityDateStr);
 		}
