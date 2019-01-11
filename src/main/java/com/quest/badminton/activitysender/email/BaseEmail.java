@@ -15,9 +15,10 @@ import lombok.Setter;
 public abstract class BaseEmail {
 	protected String from = "Jason.Tian@quest.com";
 	protected String[] to;
-	protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
+//	protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
+	protected String[] cc = new String[] {  "Jason.Tian@quest.com" };
 	protected String subject;
-	protected String content;
+	protected Object content;
 	private String contentFileName;
 
 	protected String basePath;

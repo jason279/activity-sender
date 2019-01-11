@@ -130,8 +130,8 @@ public class ClubWebSiteService {
 
 		body.add("end_date[year]", Integer.toString(activityDate.getYear()));
 		body.add("end_date[month]", Integer.toString(activityDate.getMonthValue()));
-		body.add("end_date[day]", Integer.toString(activityDate.minusDays(1).getDayOfMonth()));
-		body.add("end_date[hour]", "16");
+		body.add("end_date[day]", Integer.toString(activityDate.getDayOfMonth()));
+		body.add("end_date[hour]", "11");
 		body.add("end_date[minute]", "00");
 		return body;
 	}
