@@ -12,15 +12,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseEmail {
-	protected String from = "Jason.Tian@quest.com";
-	protected String[] to;
-//	protected String[] cc = new String[] { "Mark.Zhu@quest.com", "Jason.Tian@quest.com" };
-	protected String[] cc = new String[] {  "Jason.Tian@quest.com" };
-	protected String subject;
-	protected Object content;
-	private String contentFileName;
+public class BaseEmail {
+	private static final String EMAIL_JASON = "Jason.Tian@quest.com";
+	private static final String EMAIL_SCOTT = "Scott.He@quest.com";
+	private static final String[] EMAIL_ORGANIZER = new String[] { EMAIL_SCOTT, EMAIL_JASON };
 
+	protected String from;
+	protected String[] to;
+	protected String[] cc;
+	protected String subject = ActivityUtils.getActivityDateString("周五羽毛球活动正常进行(MM月dd日)");
+	protected Object content;
+
+	private String contentFileName;
 	protected String basePath;
 
 	protected String[] initTo() throws Exception {
@@ -28,15 +31,25 @@ public abstract class BaseEmail {
 		return new String[0];
 	}
 
+	public BaseEmail(String from, String[] to, String[] cc, String content) {
+		this.from = from;
+		this.to = to;
+		this.cc = cc;
+		this.content = content;
+	}
+
+	public BaseEmail(String content) {
+		this(EMAIL_JASON, EMAIL_ORGANIZER, EMAIL_ORGANIZER, content);
+	}
+
 	public BaseEmail(String basePath, String contentFileName) {
 		this.basePath = basePath;
 		this.contentFileName = contentFileName;
-		this.subject = ActivityUtils.getActivityDateString("周五羽毛球活动正常进行(MM月dd日)");
 		try {
 			this.to = initTo();
 			initContent();
 		} catch (Exception e) {
-			this.to = new String[] { "Jason.Tian@quest.com" };
+			this.to = new String[] { EMAIL_JASON };
 			this.cc = null;
 			this.content = "Exception thrown by badminton email sender:" + e.getMessage();
 		}

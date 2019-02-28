@@ -25,7 +25,7 @@ import com.quest.badminton.activitysender.util.ServerConstants;
 
 @Service
 public class ClubWebSiteService {
-	private static final String MAX_AMOUNT = "12"; 
+	private static final String MAX_AMOUNT = "16"; 
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -131,7 +131,7 @@ public class ClubWebSiteService {
 		body.add("end_date[year]", Integer.toString(activityDate.getYear()));
 		body.add("end_date[month]", Integer.toString(activityDate.getMonthValue()));
 		body.add("end_date[day]", Integer.toString(activityDate.getDayOfMonth()));
-		body.add("end_date[hour]", "11");
+		body.add("end_date[hour]", "12");
 		body.add("end_date[minute]", "00");
 		return body;
 	}
