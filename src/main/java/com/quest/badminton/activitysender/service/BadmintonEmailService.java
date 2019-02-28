@@ -34,14 +34,6 @@ public class BadmintonEmailService {
 	}
 
 	@Scheduled(cron = "0 0 12 * * thu")
-	public void sendTempResultEmailTask() {
-		String cookie = webSiteService.loginAsAdmin();
-		String viewId = webSiteService.getTopActivityViewId(cookie);
-		String[] recipients = webSiteService.getSignupRecipients(cookie, viewId);
-		sendEmail(new BaseEmail("截止目前报名人数为" + recipients.length + ":<br/>" + Arrays.toString(recipients)));
-	}
-
-	@Scheduled(cron = "0 0 12 * * fri")
 	public void sendAcitvityResultEmailTask() {
 		String cookie = webSiteService.loginAsAdmin();
 		String viewId = webSiteService.getTopActivityViewId(cookie);

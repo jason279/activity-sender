@@ -2,7 +2,7 @@
 <body>
 <h2>Hi All,</h2>
 <div style="font-size:16px;font-family:Helvetica,Arial,sans-serif">
-周五羽毛球活动继续,请大家踊跃参与。<font style="color:red">因为需要提前订场，请大家最好在周四12:00前报名，最终报名截止时间为周五12:00！</font><br /><br/>
+周五羽毛球活动继续,请大家踊跃参与。<font style="color:red">因为需要提前订场，请大家在周四12:00前报名！</font><br /><br/>
 活动时间：周五18:00 – 20:00 <br /><br />
 活动地点：体育中心羽毛球馆<br /><br />
 场地数：6-8人一个场，12-16人两个场<br /><br />
