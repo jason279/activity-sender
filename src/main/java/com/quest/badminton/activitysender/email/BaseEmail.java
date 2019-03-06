@@ -38,11 +38,17 @@ public class BaseEmail {
 		this.content = content;
 	}
 
+	public BaseEmail() {
+		this.from = EMAIL_JASON;
+		this.cc = EMAIL_ORGANIZER;
+	}
+
 	public BaseEmail(String content) {
 		this(EMAIL_JASON, EMAIL_ORGANIZER, EMAIL_ORGANIZER, content);
 	}
 
 	public BaseEmail(String basePath, String contentFileName) {
+		this();
 		this.basePath = basePath;
 		this.contentFileName = contentFileName;
 		try {
