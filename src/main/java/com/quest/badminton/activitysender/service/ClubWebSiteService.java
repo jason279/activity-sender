@@ -116,7 +116,6 @@ public class ClubWebSiteService {
 		LocalDate activityDate = ActivityUtils.getActivityDate();
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("club_id", "1");
-
 		body.add("activity_date[year]", Integer.toString(activityDate.getYear()));
 		body.add("activity_date[month]", Integer.toString(activityDate.getMonthValue()));
 		body.add("activity_date[day]", Integer.toString(activityDate.getDayOfMonth()));
@@ -128,9 +127,10 @@ public class ClubWebSiteService {
 		body.add("allow_sign", "1");
 		body.add("multiple_sign", "0");
 
-		body.add("end_date[year]", Integer.toString(activityDate.getYear()));
-		body.add("end_date[month]", Integer.toString(activityDate.getMonthValue()));
-		body.add("end_date[day]", Integer.toString(activityDate.getDayOfMonth()));
+		LocalDate endDate = activityDate.minusDays(1);
+		body.add("end_date[year]", Integer.toString(endDate.getYear()));
+		body.add("end_date[month]", Integer.toString(endDate.getMonthValue()));
+		body.add("end_date[day]", Integer.toString(endDate.getDayOfMonth()));
 		body.add("end_date[hour]", "12");
 		body.add("end_date[minute]", "00");
 		return body;
