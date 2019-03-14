@@ -1,7 +1,5 @@
 package com.quest.badminton.activitysender.service;
 
-import java.util.Arrays;
-
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;

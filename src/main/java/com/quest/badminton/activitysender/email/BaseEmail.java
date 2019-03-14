@@ -15,7 +15,8 @@ import lombok.Setter;
 public class BaseEmail {
 	private static final String EMAIL_JASON = "Jason.Tian@quest.com";
 	private static final String EMAIL_SCOTT = "Scott.He@quest.com";
-	private static final String[] EMAIL_ORGANIZER = new String[] { EMAIL_SCOTT, EMAIL_JASON };
+	private static final String EMAIL_JEFFREY = "Jeffrey.Wu@quest.com";
+	private static final String[] EMAIL_ORGANIZER = new String[] { EMAIL_SCOTT, EMAIL_JASON, EMAIL_JEFFREY };
 
 	protected String from;
 	protected String[] to;
