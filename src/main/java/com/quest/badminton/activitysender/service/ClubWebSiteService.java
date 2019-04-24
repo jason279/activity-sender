@@ -25,7 +25,7 @@ import com.quest.badminton.activitysender.util.ServerConstants;
 
 @Service
 public class ClubWebSiteService {
-	private static final String MAX_AMOUNT = "16"; 
+	private static final String MAX_AMOUNT = "66"; 
 	@Autowired
 	private RestTemplate restTemplate;
 

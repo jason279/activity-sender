@@ -22,7 +22,7 @@ public class BaseEmail {
 	protected String[] to;
 	protected String[] cc;
 	protected String subject = ActivityUtils.getActivityDateString("周五羽毛球活动正常进行(MM月dd日)");
-	protected Object content;
+	protected String content;
 
 	private String contentFileName;
 	protected String basePath;
