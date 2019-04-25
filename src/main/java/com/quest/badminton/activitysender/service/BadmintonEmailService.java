@@ -51,7 +51,7 @@ public class BadmintonEmailService {
 
 	public BaseEmail createSignupResultEmail(String cookie, String viewId) {
 		String[] recipients = webSiteService.getSignupRecipients(cookie, viewId);
-		boolean shouldCancel = recipients.length > 6;
+		boolean shouldCancel = recipients.length < 6;
 		ActivityResultEmail email = new ActivityResultEmail(basePath,
 				shouldCancel ? "activityCancelContent.txt" : "activityResultContent.txt");
 		email.setContent(email.getContent().replace("${peopleNum}", String.valueOf(recipients.length)));
