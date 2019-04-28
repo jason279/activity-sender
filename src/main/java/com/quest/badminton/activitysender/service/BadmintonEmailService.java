@@ -51,12 +51,20 @@ public class BadmintonEmailService {
 
 	public BaseEmail createSignupResultEmail(String cookie, String viewId) {
 		String[] recipients = webSiteService.getSignupRecipients(cookie, viewId);
+		updateRecipients(recipients);
 		boolean shouldCancel = recipients.length < 6;
 		ActivityResultEmail email = new ActivityResultEmail(basePath,
 				shouldCancel ? "activityCancelContent.txt" : "activityResultContent.txt");
 		email.setContent(email.getContent().replace("${peopleNum}", String.valueOf(recipients.length)));
 		email.setTo(recipients);
 		return email;
+	}
+
+	private void updateRecipients(String[] recipients) {
+		for (String recipient : recipients) {
+			recipient.replace("software.dell.com", "quest.com");
+		}
+
 	}
 
 	public void sendEmail(BaseEmail email) {
