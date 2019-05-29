@@ -6,7 +6,6 @@ Candy.Deng@quest.com
 Chanderler.Qian@quest.com
 Cindy.Sang@quest.com
 Darren.Yue@quest.com
-Darrenn.Jiang@quest.com
 Dylan.Liu@quest.com
 Evan.Huang@quest.com
 Fred.Liu@quest.com
@@ -32,7 +31,6 @@ Mark.Wang@quest.com
 Matthew.Tan@quest.com
 Ocean.Yin@quest.com
 Penny.L.Liang@quest.com
-Qing.Wei@quest.com
 Ashima.Arora@quest.com
 Rury.Chen@quest.com
 Russell.Chen@quest.com
@@ -40,7 +38,6 @@ Sue.Su@quest.com
 Sara.Li@quest.com
 Scorpio.Su@quest.com
 Scott.Wang@quest.com
-Stephen.Hu@quest.com
 Summer.Lu@quest.com
 Ted.Zeng@quest.com
 Terry.Li@quest.com
@@ -99,7 +96,6 @@ Vincent.Hu@quest.com
 Tony.Cheng.Zhuhai@quest.com
 Tim.Wu@quest.com
 Matthew.Tan@quest.com
-Leo.Liang@quest.com
 Shirly.Nie@quest.com
 Lucien.Liang@quest.com
 Dantes.Lu@quest.com
@@ -113,3 +109,4 @@ Johnny.Jiang@quest.com
 Scott.He@quest.com
 Echo.Liang@quest.com
 Sydroid.Shi@quest.com
+Hunk.Huang@quest.com
